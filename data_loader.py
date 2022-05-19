@@ -16,7 +16,7 @@ class CustomImageDataset(Dataset):
         return 202599
 
     def __getitem__(self, idx):
-        img_path = f'/kaggle/input/celeba-dataset/img_align_celeba/{idx + 1:06d}.jpg'
+        img_path = f'/kaggle/input/celeba-dataset/img_align_celeba/img_align_celeba/{idx + 1:06d}.jpg'
         image = read_image(img_path)
         image = self.transform(image)
         return image
