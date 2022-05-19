@@ -2,13 +2,15 @@ import torch
 from torch.utils.data import Dataset
 
 import torchvision
-from torchvision.io import read_image
+import torchvision.io as io
 import torchvision.transforms as transforms
+
+# cd /kaggle/input/celeba-dataset/img_align_celeba/[000001-202599].jpg
 
 class CustomImageDataset(Dataset):
     def __init__(self):
         self.transform = transforms.Compose([
-            transforms.ToTensor(),
+            transforms.(),
             transforms.Normalize(0.5, 0.5)
         ])
         super().__init__()
@@ -18,7 +20,7 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path = f'/kaggle/input/celeba-dataset/img_align_celeba/img_align_celeba/{idx + 1:06d}.jpg'
-        image = read_image(img_path)
+        image = io.imread(img_path)
         image = self.transform(image)
         return image
 
