@@ -56,8 +56,6 @@ class Solver:
 
         while True:
             try: 
-                self.logger.info(f'Iter {iteration}:')
-        
                 x = next(generator)
                 x = x.to(self.device)
                 
@@ -69,7 +67,7 @@ class Solver:
                     x_next = np.sqrt(1-self.beta[t]) * x + self.beta[t] * torch.randn_like(x)
                     
                     x_rec = np.sqrt(1 / self.alpha[t]) * (x - self.beta[t] / np.sqrt(1 - alpha_bar) * self.model(x_next))
-                    loss = torch.square(x_next - x_rec).mean()
+                    loss = torch.square(x_next - x_rec).sum()
                     loss.backward()
                     training_loss.append(loss.item())
                     self.optimizer.step()
