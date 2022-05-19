@@ -68,7 +68,7 @@ class Solver:
                     self.optimizer.zero_grad()
                     x_next = np.sqrt(1-self.beta[t]) * x + self.beta[t] * torch.randn_like(x)
 
-                    x_rec = np.rsqrt(self.alpha[t]) * (x - self.beta[t] / np.rsqrt(1 - alpha_bar) * self.model(x_next))
+                    x_rec = np.sqrt(1 / self.alpha[t]) * (x - self.beta[t] / np.sqrt(1 - alpha_bar) * self.model(x_next))
                     loss = torch.square(x_next - x_rec).mean()
                     loss.backward()
                     training_loss.append(loss.item())
