@@ -8,7 +8,6 @@ import numpy as np
 from data_loader import get_train_dataloader
 from model import ViT
 from solver import Solver
-from optimizers import Ranger
 
 
 def parse_args():
@@ -65,7 +64,7 @@ if __name__ == '__main__':
 
     model.to(device)
 
-    optimizer = Ranger(model.parameters())
+    optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=.9, weight_decay=5e-2)
 
     if args.resume:
 
