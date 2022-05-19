@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     print(f'Number of total params: {sum([np.prod(p.shape) for p in model.parameters()])}')
 
-    if start_iter >= args.num_k_iters: 
+    if start_iter >= args.num_iters: 
         print('The model has already been trained for the number of iters specified.')
 
     if not os.path.exists(args.log):
