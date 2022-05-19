@@ -8,7 +8,9 @@ class CustomImageDataset(Dataset):
     def __init__(self):
         self.transform = transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize(0.5, 0.5)
+            transforms.Normalize(0.5, 0.5),
+            transforms.CenterCrop(178),
+            transforms.Resize(64)
         ])
         super().__init__()
 
