@@ -47,8 +47,8 @@ if __name__ == '__main__':
 
     print('==> Building Network...')
     model = ViT(
-        image_size = 64,
-        patch_size = 16,
+        image_size = 256,
+        patch_size = 32,
         dim = 1024,
         depth = 6,
         heads = 8,
