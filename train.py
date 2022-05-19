@@ -107,5 +107,5 @@ if __name__ == '__main__':
         log_dir = args.log, log_interval = args.log_interval, checkpoint_interval = args.checkpoint_interval,
     )
     
-    print(f'==> Training for {args.num_iters} iterations...')
+    print(f'==> Training for {args.num_iters}k iterations...')
     solver.train(train_dataloader)

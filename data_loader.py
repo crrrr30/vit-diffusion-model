@@ -23,7 +23,7 @@ class CustomImageDataset(Dataset):
         image = self.transform(image)
         return image
 
-def get_train_dataloader(batch_size = 64, num_workers = 4):
+def get_train_dataloader(batch_size=64, num_workers=2):
     
     training_set = CustomImageDataset()
 
