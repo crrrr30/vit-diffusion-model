@@ -51,7 +51,7 @@ if __name__ == '__main__':
         patch_size = 32,
         dim = 1024,
         depth = 6,
-        heads = 8,
+        heads = 16,
         mlp_dim = 1024,
         dropout = 0.1,
         emb_dropout = 0.1
