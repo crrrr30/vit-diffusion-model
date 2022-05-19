@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import Dataset
 
-import torchvision.io as io
+from skimage import io
 import torchvision.transforms as transforms
 
 class CustomImageDataset(Dataset):
