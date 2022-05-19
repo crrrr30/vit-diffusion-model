@@ -83,7 +83,7 @@ class Solver:
                             'model_state_dict': self.model.state_dict(),
                             'optimizer_state_dict': self.optimizer.state_dict()
                         }
-                        torch.save(checkpoint, os.path.join(self.log_dir, f'checkpoint{iteration:04d}.pkl'))
+                        torch.save(checkpoint, os.path.join(self.log_dir, f'checkpoint{int(iteration/1000):04d}.pkl'))
 
                     if iteration - self.start_iter * 1000 >= self.num_iters:
                         break
