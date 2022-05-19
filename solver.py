@@ -67,7 +67,7 @@ class Solver:
                     alpha_bar *= self.alpha[t]
                     self.optimizer.zero_grad()
                     x_next = np.sqrt(1-self.beta[t]) * x + self.beta[t] * torch.randn_like(x)
-                    self.logger.info(f'Shape: {x.shape} and {x_next.shape}')
+                    
                     x_rec = np.sqrt(1 / self.alpha[t]) * (x - self.beta[t] / np.sqrt(1 - alpha_bar) * self.model(x_next))
                     loss = torch.square(x_next - x_rec).mean()
                     loss.backward()
