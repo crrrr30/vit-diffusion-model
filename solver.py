@@ -85,7 +85,7 @@ class Solver:
                         }
                         torch.save(checkpoint, os.path.join(self.log_dir, f'checkpoint{int(iteration/1000):04d}.pkl'))
 
-                    if iteration - self.start_iter * 1000 >= self.num_iters:
+                    if iteration - self.start_iter * 1000 >= self.num_iters * 1000:
                         break
 
             except StopIteration:
