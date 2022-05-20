@@ -14,11 +14,11 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description = 'Train ViT-based diffusion model for image synthesis on Celeba 64x64.')
     
-    parser.add_argument('--num-iters', help = 'Number of thousand iterations to train the model for', default = 200, type = int)
+    parser.add_argument('--num-iters', help = 'Number of thousand iterations to train the model for', default = 1000, type = int)
     parser.add_argument('--timesteps', help = 'Number of timesteps for the Markov Chain', default = 1000, type = int)
-    parser.add_argument('--batch-size', help = 'Batch size', default = 64, type = int)
+    parser.add_argument('--batch-size', help = 'Batch size', default = 129, type = int)
     parser.add_argument('--log', help = 'Directory to save logs to', default = 'logs', type = str)
-    parser.add_argument('--log-interval', help = 'Frequency of logging, in thousand iterations', default = 0.1, type = str)
+    parser.add_argument('--log-interval', help = 'Frequency of logging, in thousand iterations', default = 0.5, type = str)
     parser.add_argument('--checkpoint-interval', help = 'Frequency of saving checkpoints, in thousand iterations', default = 1, type = str)
     parser.add_argument('--gpu', help = 'Specify which GPU to use (separate with commas). -1 means to use CPU', default = None, type = str)
     parser.add_argument('--resume', help = 'Directory of the checkpoint to resume from or the path to the checkpoint', default = None, type = str)
