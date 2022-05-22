@@ -1,7 +1,5 @@
 # TODO - add inference
-import io
 import os
-import tqdm
 import logging
 import numpy as np
 
@@ -65,7 +63,7 @@ class Solver:
                     alpha_bar *= self.alpha[t]
                     self.optimizer.zero_grad()
                     epsilon = torch.randn_like(x0)
-                    loss = torch.square(epsilon - self.model(np.sqrt(alpha_bar) * x0 + np.sqrt(1 - alpha_bar) * epsilon)).sum()
+                    loss = torch.square(epsilon - self.model(np.sqrt(alpha_bar) * x0 + np.sqrt(1 - alpha_bar) * epsilon)).mean()
                     print(loss.item())
                     loss.backward()
                     training_loss.append(loss.item())
@@ -112,3 +110,38 @@ class Solver:
                 correct += predicted.eq(y).sum().item()
 
         self.logger.info(f'Testing loss: {np.mean(test_loss):.3f} | Testing acc: {100 * correct / total:.3f}%')
+
+'''
+import numpy as np
+import glob
+import torch
+from tqdm import trange
+from model import ViT
+
+model = ViT(
+    image_size = 256,
+    patch_size = 32,
+    dim = 1024,
+    depth = 6,
+    heads = 16,
+    mlp_dim = 1024,
+    dropout = 0.1,
+    emb_dropout = 0.1
+)
+checkpoint = torch.load(
+                sorted(glob.glob('../Downloads/checkpoint*.pkl').pop()),
+            map_location = lambda _, __: _)
+model.load_state_dict(checkpoint['model_state_dict'])
+
+xprev = None
+x = torch.randn(1, 3, 256, 256)
+beta = np.linspace(0.001, 0.2, 1000)
+alpha = 1 - beta
+bar = trange(999,-1,-1)
+
+for t in bar:
+    xprev = x
+    x = beta[t] * torch.randn(1, 3, 256, 256) + (x - beta[t] / np.sqrt(1 - np.prod(alpha[:t+1])) * model(x)) / np.sqrt(alpha[t])
+    bar.set_description(f'{x.max().item():.04f},{x.min().item():.04f}')
+    if x.isnan().any().item(): break
+'''
