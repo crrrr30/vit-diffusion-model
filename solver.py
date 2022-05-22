@@ -61,13 +61,14 @@ class Solver:
 
                 for t in range(self.T):
                     alpha_bar *= self.alpha[t]
-                    beta_epsilon = self.beta[t] * torch.randn_like(x0)
-                    x_corrupted = x0 + beta_epsilon
+                    epsilon = torch.randn_like(x0)
+                    x_corrupted = x0 + self.beta[t] * epsilon
                     self.optimizer.zero_grad()
-                    loss = torch.square(self.model(x_corrupted) - beta_epsilon).mean()
+                    loss = torch.square(self.model(x_corrupted) - x0).mean()
                     loss.backward()
                     training_loss.append(loss.item())
                     self.optimizer.step()
+                    x0 = x_corrupted
                     iteration += 1
 
                     if iteration % int(self.log_interval * 1000) == 0:
