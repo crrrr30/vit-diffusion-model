@@ -61,9 +61,10 @@ class Solver:
 
                 for t in range(self.T):
                     alpha_bar *= self.alpha[t]
+                    beta_epsilon = self.beta[t] * torch.randn_like(x0)
+                    x_corrupted = x0 + beta_epsilon
                     self.optimizer.zero_grad()
-                    epsilon = torch.randn_like(x0)
-                    loss = torch.square(epsilon - self.model(np.sqrt(alpha_bar) * x0 + np.sqrt(1 - alpha_bar) * epsilon)).mean()
+                    loss = torch.square(self.model(x_corrupted) - beta_epsilon).mean()
                     loss.backward()
                     training_loss.append(loss.item())
                     self.optimizer.step()
