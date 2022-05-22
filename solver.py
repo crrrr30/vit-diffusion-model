@@ -64,7 +64,6 @@ class Solver:
                     self.optimizer.zero_grad()
                     epsilon = torch.randn_like(x0)
                     loss = torch.square(epsilon - self.model(np.sqrt(alpha_bar) * x0 + np.sqrt(1 - alpha_bar) * epsilon)).mean()
-                    print(loss.item())
                     loss.backward()
                     training_loss.append(loss.item())
                     self.optimizer.step()
