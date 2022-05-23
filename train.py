@@ -6,7 +6,7 @@ import os, glob, argparse
 import numpy as np
 
 from data_loader import get_train_dataloader
-from model import Unet
+from model import UNet
 from solver import Solver
 
 
@@ -46,10 +46,7 @@ if __name__ == '__main__':
     train_dataloader = get_train_dataloader(args.batch_size)
 
     print('==> Building Network...')
-    model = Unet(
-        dim = 64,
-        dim_mults = (1, 2, 4,)
-    )
+    model = UNet()
 
     if device == 'cuda' and torch.cuda.device_count() > 1:
         model = nn.DataParallel(model)
