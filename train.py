@@ -47,9 +47,9 @@ if __name__ == '__main__':
 
     print('==> Building Network...')
     model = Unet(
-    dim = 64,
-    dim_mults = (1, 2, 4, 8)
-)
+        dim = 64,
+        dim_mults = (1, 2, 4,)
+    )
 
     if device == 'cuda' and torch.cuda.device_count() > 1:
         model = nn.DataParallel(model)
