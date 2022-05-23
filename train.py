@@ -6,7 +6,7 @@ import os, glob, argparse
 import numpy as np
 
 from data_loader import get_train_dataloader
-from model import ViT
+from model import Unet
 from solver import Solver
 
 
@@ -46,16 +46,10 @@ if __name__ == '__main__':
     train_dataloader = get_train_dataloader(args.batch_size)
 
     print('==> Building Network...')
-    model = ViT(
-        image_size = 256,
-        patch_size = 32,
-        dim = 1024,
-        depth = 6,
-        heads = 16,
-        mlp_dim = 1024,
-        dropout = 0.1,
-        emb_dropout = 0.1
-    )
+    model = Unet(
+    dim = 64,
+    dim_mults = (1, 2, 4, 8)
+)
 
     if device == 'cuda' and torch.cuda.device_count() > 1:
         model = nn.DataParallel(model)
