@@ -324,7 +324,7 @@ class Unet(nn.Module):
         out_dim = None,
         dim_mults=(1, 2, 4, 8),
         channels = 3,
-        with_time_emb = True,
+        with_time_emb = False,
         resnet_block_groups = 8,
         learned_variance = False
     ):
