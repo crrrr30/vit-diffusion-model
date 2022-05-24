@@ -57,22 +57,29 @@ if __name__ == '__main__':
     optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=.9, weight_decay=5e-2)
 
     if args.resume:
-
-        if os.path.isdir(args.resume):
+        if os.path.exists(args.resume):
+            checkpoint = torch.load(args.resume, map_location = lambda _, __: _)
+            print(f'Resuming from iteration {checkpoint["iter"]}k...')
+            start_iter = checkpoint["iter"]
+            model.load_state_dict(checkpoint['model_state_dict'])
+            optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        elif os.path.isdir(args.resume):
             checkpoint = torch.load(
                 sorted(glob.glob(os.path.join(args.resume, 'checkpoint*.pkl'))).pop(),
-            map_location = lambda _, __: _)
-            print(f'Resuming from iteration {checkpoint["iter"] + 1}...')
-            start_iter = checkpoint["iter"] + 1
+                map_location = lambda _, __: _
+            )
+            print(f'Resuming from iteration {checkpoint["iter"]}k...')
+            start_iter = checkpoint["iter"]
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         
-        elif os.path.isdir(args.resume):
+        elif os.path.isdir(os.path.join(args.log, args.resume)):
             checkpoint = torch.load(
                 sorted(glob.glob(os.path.join(args.log, args.resume, 'checkpoint*.pkl'))).pop(),
-            map_location = lambda _, __: _)
+                map_location = lambda _, __: _
+            )
             print(f'Resuming from iteration {checkpoint["iter"]}k...')
-            start_iter = checkpoint["iter"] + 1
+            start_iter = checkpoint["iter"]
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         
