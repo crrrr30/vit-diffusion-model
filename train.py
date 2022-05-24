@@ -57,7 +57,7 @@ if __name__ == '__main__':
     optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=.9, weight_decay=5e-2)
 
     if args.resume:
-        if os.path.exists(args.resume):
+        if os.path.isfile(args.resume):
             checkpoint = torch.load(args.resume, map_location = lambda _, __: _)
             print(f'Resuming from iteration {checkpoint["iter"]}k...')
             start_iter = checkpoint["iter"]
