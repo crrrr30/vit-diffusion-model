@@ -71,7 +71,7 @@ if __name__ == '__main__':
             checkpoint = torch.load(
                 sorted(glob.glob(os.path.join(args.log, args.resume, 'checkpoint*.pkl'))).pop(),
             map_location = lambda _, __: _)
-            print(f'Resuming from iteration {checkpoint["iter"] + 1}...')
+            print(f'Resuming from iteration {checkpoint["iter"]}k...')
             start_iter = checkpoint["iter"] + 1
             model.load_state_dict(checkpoint['model_state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer_state_dict'])

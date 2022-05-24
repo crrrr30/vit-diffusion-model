@@ -49,10 +49,10 @@ class Solver:
         
         self.model.train()
         generator = iter(train_dataloader)
-        iteration = self.start_iter * 1000
+        iteration = self.start_iter * 1000 + 1
         training_loss = []
 
-        while True:
+        while iteration - self.start_iter * 1000 <= self.num_iters * 1000:
             try: 
                 x0 = next(generator)
                 x0 = x0.to(self.device)
@@ -82,9 +82,6 @@ class Solver:
                             'optimizer_state_dict': self.optimizer.state_dict()
                         }
                         torch.save(checkpoint, os.path.join(self.log_dir, f'checkpoint{int(iteration/1000):04d}.pkl'))
-
-                    if iteration - self.start_iter * 1000 >= self.num_iters * 1000:
-                        break
 
             except StopIteration:
                 generator = iter(train_dataloader)
