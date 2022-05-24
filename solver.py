@@ -77,7 +77,7 @@ class Solver:
 
                     if iteration % int(self.checkpoint_interval * 1000) == 0:
                         checkpoint = {
-                            'iter': iteration,
+                            'iter': int(iteration / 1000),
                             'model_state_dict': self.model.state_dict(),
                             'optimizer_state_dict': self.optimizer.state_dict()
                         }

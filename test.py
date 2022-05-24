@@ -2,21 +2,13 @@ import numpy as np
 import glob
 import torch
 from tqdm import trange
-from model import ViT
+from model import UNet
 
-model = ViT(
-    image_size = 256,
-    patch_size = 32,
-    dim = 1024,
-    depth = 6,
-    heads = 16,
-    mlp_dim = 1024,
-    dropout = 0.1,
-    emb_dropout = 0.1
-)
+model = UNet()
 checkpoint = torch.load(
-                sorted(glob.glob('../Downloads/checkpoint*.pkl')).pop(),
-            map_location = lambda _, __: _)
+    sorted(glob.glob('../Downloads/checkpoint*.pkl')).pop(),
+    map_location = lambda _, __: _
+)
 model.load_state_dict(checkpoint['model_state_dict'])
 
 xprev = None
@@ -27,13 +19,14 @@ bar = trange(999,-1,-1)
 
 model.eval()
 
-for t in bar:
-    xprev = x
-    x = x - model(x)
-    bar.set_description(f'{x.max().item():.04f},{x.min().item():.04f}')
-    if x.isnan().any().item(): break
+with torch.no_grad():
+    for t in bar:
+        xprev = x.clone()
+        x = model(x)
+        bar.set_description(f'{x.max().item():.04f},{x.min().item():.04f}')
+        if x.isnan().any().item(): break
 
-import matplotlib.pyplot as plt
-plt.imshow(x[0].detach().transpose(2, 0).numpy())
-plt.show()
+    import matplotlib.pyplot as plt
+    plt.imshow(x[0].transpose(2, 0).numpy())
+    plt.show()
 
